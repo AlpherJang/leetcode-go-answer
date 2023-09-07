@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// https://leetcode.cn/problems/substring-with-concatenation-of-all-words
 func main() {
 	fmt.Println(findSubstring("barfoothefoobarman", []string{"foo", "bar"}))
 }
