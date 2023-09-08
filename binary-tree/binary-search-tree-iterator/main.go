@@ -50,37 +50,32 @@ type TreeNode struct {
 }
 
 type BSTIterator struct {
-	data []*TreeNode
-	idx  int
+	data []int
 }
 
 func Constructor(root *TreeNode) BSTIterator {
-	return BSTIterator{
-		idx:  0,
-		data: reverse(root),
-	}
+	iter := BSTIterator{data: []int{}}
+	iter.reverse(root)
+	return iter
 }
 
-func reverse(root *TreeNode) []*TreeNode {
+func (this *BSTIterator) reverse(root *TreeNode) {
 	if root == nil {
-		return []*TreeNode{}
+		return
 	}
-	left := reverse(root.Left)
-	right := reverse(root.Right)
-	return append(left, append([]*TreeNode{root}, right...)...)
+	this.reverse(root.Left)
+	this.data = append(this.data, root.Val)
+	this.reverse(root.Right)
 }
 
 func (this *BSTIterator) Next() int {
-	data := this.data[this.idx]
-	this.idx++
-	return data.Val
+	data := this.data[0]
+	this.data = this.data[1:]
+	return data
 }
 
 func (this *BSTIterator) HasNext() bool {
-	if this.idx+1 <= len(this.data) {
-		return true
-	}
-	return false
+	return len(this.data) > 0
 }
 
 /**
