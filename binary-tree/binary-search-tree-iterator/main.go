@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+
+// https://leetcode.cn/problems/binary-search-tree-iterator
 func main() {
 	op := []string{"BSTIterator", "next", "next", "hasNext", "next", "hasNext", "next", "hasNext", "next", "hasNext"}
 	data := []interface{}{[]interface{}{7, 3, 15, nil, nil, 9, 20}}
