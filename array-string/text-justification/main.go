@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// https://leetcode.cn/problems/text-justification
 func main() {
 	printSlice(fullJustify([]string{"This", "is", "an", "example", "of", "text", "justification."}, 16))
 }
