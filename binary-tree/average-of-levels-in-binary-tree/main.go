@@ -8,23 +8,28 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-// https://leetcode.cn/problems/average-of-levels-in-binary-tree
+// https://leetcode.cn/problems/binary-tree-right-side-view
 func main() {
-	fmt.Println(rightSideView(buildTree([]interface{}{1, nil, 3})))
+	fmt.Println(averageOfLevels(buildTree([]interface{}{3, 9, 20, 15, 7})))
 }
 
-func rightSideView(root *TreeNode) []int {
+func averageOfLevels(root *TreeNode) []float64 {
 	if root == nil {
 		return nil
 	}
-	res := make([]int, 0)
+	res := make([]float64, 0)
 	queue := []*TreeNode{root}
 	levelLast := 1
+	sum := 0
+	levelCount := float64(1)
 	for len(queue) > 0 {
 		item := queue[0]
+		sum += item.Val
 		levelLast--
 		if levelLast == 0 {
-			res = append(res, item.Val)
+			res = append(res, float64(sum)/levelCount)
+			levelCount = 0
+			sum = 0
 		}
 		queue = queue[1:]
 		if item.Left != nil {
@@ -35,6 +40,7 @@ func rightSideView(root *TreeNode) []int {
 		}
 		if levelLast == 0 {
 			levelLast = len(queue)
+			levelCount = float64(levelLast)
 		}
 	}
 	return res
