@@ -7,28 +7,23 @@ func main() {
 	fmt.Println(combine(5, 4))
 }
 
-func combine(n int, k int) (ans [][]int) {
-	temp := []int{}
-	var dfs func(int)
-	dfs = func(cur int) {
-		// 剪枝：temp 长度加上区间 [cur, n] 的长度小于 k，不可能构造出长度为 k 的 temp
-		if len(temp)+(n-cur+1) < k {
+func combine(n, k int) [][]int {
+	var res [][]int
+	var backtrack func(int, int, []int)
+	backtrack = func(last, idx int, tmp []int) {
+		tmpList := make([]int, len(tmp))
+		copy(tmpList, tmp)
+		tmpList = append(tmpList, last)
+		if idx == k {
+			res = append(res, tmpList)
 			return
 		}
-		// 记录合法的答案
-		if len(temp) == k {
-			comb := make([]int, k)
-			copy(comb, temp)
-			ans = append(ans, comb)
-			return
+		for i := last + 1; i <= n; i++ {
+			backtrack(i, idx+1, tmpList)
 		}
-		// 考虑选择当前位置
-		temp = append(temp, cur)
-		dfs(cur + 1)
-		temp = temp[:len(temp)-1]
-		// 考虑不选择当前位置
-		dfs(cur + 1)
 	}
-	dfs(1)
-	return
+	for i := 1; i <= n; i++ {
+		backtrack(i, 1, []int{})
+	}
+	return res
 }
